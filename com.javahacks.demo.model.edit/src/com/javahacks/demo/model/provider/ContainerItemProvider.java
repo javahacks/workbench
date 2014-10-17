@@ -53,7 +53,8 @@ public class ContainerItemProvider extends ItemItemProvider {
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(
+			Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.CONTAINER__ITEMS);
@@ -121,10 +122,11 @@ public class ContainerItemProvider extends ItemItemProvider {
 	 * describing the children that can be created under this object. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
-	 * @generated 
+	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(
+			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
@@ -136,12 +138,6 @@ public class ContainerItemProvider extends ItemItemProvider {
 			(createChildParameter
 				(ModelPackage.Literals.CONTAINER__ITEMS,
 				 ModelFactory.eINSTANCE.createContainer()));
-	}
-
-	
-	@Override
-	public int getVirtualFolderSize() {
-		return 10;
 	}
 
 }

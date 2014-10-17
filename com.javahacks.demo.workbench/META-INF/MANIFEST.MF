@@ -9,6 +9,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.edit.ui;bundle-version="2.10.1",
  com.javahacks.demo.model;bundle-version="1.0.0",
- com.javahacks.demo.model.edit;bundle-version="1.0.0"
+ com.javahacks.demo.model.edit;bundle-version="1.0.0",
+ org.apache.commons.lang;bundle-version="2.6.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
