@@ -20,8 +20,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * 
- * 
  * @author Wolfgang Geck
  */
 public abstract class VirtualContainerContentProvider extends AdapterFactoryContentProvider {
