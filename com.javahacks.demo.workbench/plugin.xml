@@ -25,7 +25,7 @@
             class="com.javahacks.demo.workbench.View"
             icon="icons/alt_window_16.gif"
             id="com.javahacks.demo.workbench.view"
-            name="View">
+            name="Partition Demo">
       </view>
    </extension>
    <extension
