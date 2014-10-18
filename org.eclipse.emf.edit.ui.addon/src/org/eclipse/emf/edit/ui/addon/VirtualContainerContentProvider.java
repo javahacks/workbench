@@ -1,4 +1,4 @@
-package com.javahacks.demo.workbench;
+package org.eclipse.emf.edit.ui.addon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,15 +16,18 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 /**
+ * This class is used
+ * 
  * @author Wolfgang Geck
  */
 public abstract class VirtualContainerContentProvider extends AdapterFactoryContentProvider {
 
-	private final Image descriptor = new Image(Display.getCurrent(), getClass().getResourceAsStream("virtual_folder.gif"));
+	private final Image descriptor = new Image(Display.getCurrent(), VirtualContainerContentProvider.class.getResourceAsStream("virtual_folder.gif"));
 	protected final int DEFAULT_FOLDER_SIZE = -1;
 
 	private final Map<Object, FoldedItemProvider[]> map = new WeakHashMap<Object, FoldedItemProvider[]>();
@@ -37,7 +40,7 @@ public abstract class VirtualContainerContentProvider extends AdapterFactoryCont
 	public Object[] getChildren(Object object) {
 
 		if (object instanceof FoldedItemProvider) {
-			return ((FoldedItemProvider) object).getChildrenSubList();
+			return ((FoldedItemProvider) object).getChildrenSubList(); // already strored as array
 		}
 
 		Object[] children = super.getChildren(object);
@@ -125,6 +128,10 @@ public abstract class VirtualContainerContentProvider extends AdapterFactoryCont
 
 	protected abstract int getVirtualFolderSize(Object folder);
 
+	
+	/**
+	 * TODO
+	 */
 	private final class FoldedItemProvider extends ItemProviderAdapter implements IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, IEditingDomainItemProvider {
 
 		private int startIndex;
@@ -144,11 +151,10 @@ public abstract class VirtualContainerContentProvider extends AdapterFactoryCont
 
 		public Object[] getChildrenSubList() {
 			return Arrays.copyOfRange(originalChildElements, startIndex, endIndex);
-		}
+		}			
 
 		@Override
 		public boolean hasChildren(Object object) {
-
 			return object instanceof FoldedItemProvider || super.hasChildren(object);
 		}
 
