@@ -30,7 +30,8 @@ import org.eclipse.swt.widgets.Display;
  */
 public class PartitionedContentProvider extends AdapterFactoryContentProvider {
 
-    private final Image descriptor = new Image(Display.getCurrent(), PartitionedContentProvider.class.getResourceAsStream("virtual_folder.gif"));
+    private final Image folderImage = new Image(Display.getCurrent(), PartitionedContentProvider.class.getResourceAsStream("virtual_folder.gif"));
+    
     protected final static int DEFAULT_FOLDER_SIZE = -1;
 
     private final Map<Object, VirtualFolderItemProvider[]> map = new WeakHashMap<Object, VirtualFolderItemProvider[]>();
@@ -123,7 +124,7 @@ public class PartitionedContentProvider extends AdapterFactoryContentProvider {
     @Override
     public void dispose() {
         map.clear();
-        descriptor.dispose();
+        folderImage.dispose();
         super.dispose();
     }
 
@@ -178,7 +179,7 @@ public class PartitionedContentProvider extends AdapterFactoryContentProvider {
 
         @Override
         public Object getImage(Object object) {
-            return descriptor;
+            return folderImage;
         }
 
         @Override
