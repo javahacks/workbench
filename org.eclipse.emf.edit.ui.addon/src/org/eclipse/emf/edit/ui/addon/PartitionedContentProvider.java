@@ -21,13 +21,14 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * This content provider works like a normal
- * {@link AdapterFactoryContentProvider} but limits the maximum number of 
+ * {@link AdapterFactoryContentProvider} but limits the maximum number of
  * container's child elements to a fixed size. If the number of child elements
- * exceeds this limit, virtual boxes that contain all child elements are created.
+ * exceeds this limit, virtual boxes that contain all child elements are
+ * created.
  * 
  * @author Wolfgang Geck
  */
-public abstract class PartitionedContentProvider extends AdapterFactoryContentProvider {
+public class PartitionedContentProvider extends AdapterFactoryContentProvider {
 
     private final Image descriptor = new Image(Display.getCurrent(), PartitionedContentProvider.class.getResourceAsStream("virtual_folder.gif"));
     protected final static int DEFAULT_FOLDER_SIZE = -1;
@@ -42,7 +43,7 @@ public abstract class PartitionedContentProvider extends AdapterFactoryContentPr
     public Object[] getChildren(Object object) {
 
         if (object instanceof VirtualFolderItemProvider) {
-            return ((VirtualFolderItemProvider) object).getChildrenSubList(); // no list conversion
+            return ((VirtualFolderItemProvider) object).createPartitionedArray(); // no list conversion
         }
 
         Object[] children = super.getChildren(object);
@@ -86,16 +87,16 @@ public abstract class PartitionedContentProvider extends AdapterFactoryContentPr
 
         Object parent = super.getParent(object);
 
-        if (getVirtualFolderSize(parent) > -1) {
+        if (getVirtualFolderSize(parent) > -1 && ! (object instanceof PartitionedContentProvider)) {
+
+            getChildren(parent);
 
             if (map.get(parent) != null) {
 
                 for (VirtualFolderItemProvider provider : map.get(parent)) {
 
-                    for (Object child : provider.getChildrenSubList()) {
-
-                        if (child == object)
-                            return provider;
+                    if (provider.contains(object)){                                                
+                        return provider;
                     }
 
                 }
@@ -104,7 +105,7 @@ public abstract class PartitionedContentProvider extends AdapterFactoryContentPr
 
         }
 
-        return super.getParent(object);
+        return parent;
     }
 
     @Override
@@ -126,7 +127,9 @@ public abstract class PartitionedContentProvider extends AdapterFactoryContentPr
         super.dispose();
     }
 
-    protected abstract int getVirtualFolderSize(Object folder);
+    protected int getVirtualFolderSize(Object folder) {
+        return DEFAULT_FOLDER_SIZE;
+    };
 
     /**
      * Item provider for virtual folders that contain the parent's child
@@ -148,23 +151,29 @@ public abstract class PartitionedContentProvider extends AdapterFactoryContentPr
             this.originalChildElements = originalChildElements;
         }
 
-        public Object[] getChildrenSubList() {
+        private boolean contains(Object object) {
+
+            for (int i = startIndex; i < endIndex; i++) {
+                if (object.equals(originalChildElements[i])) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private Object[] createPartitionedArray() {
             return Arrays.copyOfRange(originalChildElements, startIndex, endIndex);
         }
 
         @Override
         public boolean hasChildren(Object object) {
-            return object instanceof VirtualFolderItemProvider || super.hasChildren(object);
+            return object instanceof VirtualFolderItemProvider;
         }
 
         @Override
-        public Object getParent(Object object) {
-
-            if (object instanceof VirtualFolderItemProvider) {
-                return ((VirtualFolderItemProvider) object).parent;
-            }
-
-            return super.getParent(object);
+        public Object getParent(Object object) {            
+            return ((VirtualFolderItemProvider) object).parent;
         }
 
         @Override

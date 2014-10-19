@@ -4,12 +4,15 @@ package com.javahacks.demo.model.provider;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
+import com.javahacks.demo.model.Container;
 import com.javahacks.demo.model.Item;
 import com.javahacks.demo.model.ModelPackage;
 
@@ -81,14 +84,12 @@ public class ItemItemProvider extends BaseElementItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Item)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Item_type") :
-			getString("_UI_Item_type") + " " + label;
+		String label = ((Item)object).getName();		
+        return label == null || label.length() == 0 ? "" : label;
 	}
 
 	/**
