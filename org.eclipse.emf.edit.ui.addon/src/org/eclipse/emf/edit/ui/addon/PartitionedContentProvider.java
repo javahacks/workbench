@@ -23,14 +23,15 @@ import org.eclipse.swt.widgets.Display;
  * This content provider works like a normal
  * {@link AdapterFactoryContentProvider} but limits the maximum number of
  * container's child elements to a fixed size. If the number of child elements
- * exceeds this limit, virtual boxes that contain all child elements are
+ * exceeds this limit, virtual containers that contain a subset of the parent's child elements are
  * created.
  * 
  * @author Wolfgang Geck
  */
 public class PartitionedContentProvider extends AdapterFactoryContentProvider {
 
-    private final Image descriptor = new Image(Display.getCurrent(), PartitionedContentProvider.class.getResourceAsStream("virtual_folder.gif"));
+    private final Image folderImage = new Image(Display.getCurrent(), PartitionedContentProvider.class.getResourceAsStream("virtual_folder.gif"));
+    
     protected final static int DEFAULT_FOLDER_SIZE = -1;
 
     private final Map<Object, VirtualFolderItemProvider[]> map = new WeakHashMap<Object, VirtualFolderItemProvider[]>();
@@ -123,7 +124,7 @@ public class PartitionedContentProvider extends AdapterFactoryContentProvider {
     @Override
     public void dispose() {
         map.clear();
-        descriptor.dispose();
+        folderImage.dispose();
         super.dispose();
     }
 
@@ -178,7 +179,7 @@ public class PartitionedContentProvider extends AdapterFactoryContentProvider {
 
         @Override
         public Object getImage(Object object) {
-            return descriptor;
+            return folderImage;
         }
 
         @Override
