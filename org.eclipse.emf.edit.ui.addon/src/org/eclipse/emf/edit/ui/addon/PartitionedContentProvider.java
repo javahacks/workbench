@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Display;
  * This content provider works like a normal
  * {@link AdapterFactoryContentProvider} but limits the maximum number of
  * container's child elements to a fixed size. If the number of child elements
- * exceeds this limit, virtual boxes that contain all child elements are
+ * exceeds this limit, virtual containers that contain all child elements are
  * created.
  * 
  * @author Wolfgang Geck
