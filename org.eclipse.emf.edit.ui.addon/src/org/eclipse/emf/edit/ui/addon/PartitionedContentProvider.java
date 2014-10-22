@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Display;
 public class PartitionedContentProvider extends AdapterFactoryContentProvider {
 
     private final Image folderImage = new Image(Display.getCurrent(), PartitionedContentProvider.class.getResourceAsStream("virtual_folder.gif"));
-    
+
     protected final static int DEFAULT_FOLDER_SIZE = -1;
 
     private final Map<Object, VirtualFolderItemProvider[]> map = new WeakHashMap<Object, VirtualFolderItemProvider[]>();
@@ -88,7 +88,7 @@ public class PartitionedContentProvider extends AdapterFactoryContentProvider {
 
         Object parent = super.getParent(object);
 
-        if (getVirtualFolderSize(parent) > -1 && ! (object instanceof PartitionedContentProvider)) {
+        if (getVirtualFolderSize(parent) > -1 && !(object instanceof PartitionedContentProvider)) {
 
             getChildren(parent);
 
@@ -96,7 +96,7 @@ public class PartitionedContentProvider extends AdapterFactoryContentProvider {
 
                 for (VirtualFolderItemProvider provider : map.get(parent)) {
 
-                    if (provider.contains(object)){                                                
+                    if (provider.contains(object)) {
                         return provider;
                     }
 
@@ -128,7 +128,15 @@ public class PartitionedContentProvider extends AdapterFactoryContentProvider {
         super.dispose();
     }
 
-    protected int getVirtualFolderSize(Object folder) {
+    /**
+     * If given object has child elements, overwrite this method to set maximum number
+     * of elements in a single virtual folder. If virtual folder size is
+     * <b>-1</b> or number of children is less than virtual folder size, child
+     * elements are direct successors of parent.
+     * 
+     * @return Virtual folder size
+     */
+    protected int getVirtualFolderSize(Object parent) {
         return DEFAULT_FOLDER_SIZE;
     };
 
@@ -173,7 +181,7 @@ public class PartitionedContentProvider extends AdapterFactoryContentProvider {
         }
 
         @Override
-        public Object getParent(Object object) {            
+        public Object getParent(Object object) {
             return ((VirtualFolderItemProvider) object).parent;
         }
 
