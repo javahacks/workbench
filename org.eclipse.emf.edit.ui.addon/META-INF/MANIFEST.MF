@@ -4,5 +4,5 @@ Bundle-Name: Addon
 Bundle-SymbolicName: org.eclipse.emf.edit.ui.addon
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.eclipse.emf.edit.ui;bundle-version="2.10.1"
+Require-Bundle: org.eclipse.emf.edit.ui;bundle-version="2.10.1";visibility:=reexport
 Export-Package: org.eclipse.emf.edit.ui.addon
